@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +12,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('tasks.index');
 });
+
+Auth::routes();
+
+Route::get('/home', function () {
+    return redirect()->route('tasks.index');
+})->name('home');
+
+Route::resource('tasks', 'TasksController')->parameters(['tasks' => 'id'])->middleware('auth');
+
+Route::resource('projects', 'ProjectsController')->parameters(['projects' => 'id'])->middleware('auth');
